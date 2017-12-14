@@ -1,8 +1,21 @@
 angular.module('Morpion')
 	.component('morpion', {
 		templateUrl: 'morpion.template.html',
+		bindings: {
+			'onStop': '&',
+			'playing': '<'
+		},
 		controller: function($scope, gameData) {
 			var ctrl = this;
+			ctrl.currentPlayer = {
+				test: gameData.players[gameData.current]
+			};
+			ctrl.doMove = (index) => {
+				gameData.values[index] = ctrl.currentPlayer;
+				gameData.switchPlayer();
+				ctrl.currentPlayer.test = gameData.players[gameData.current];
+				console.log('morpion:%s', JSON.stringify(ctrl.currentPlayer));
+			};
 			let checkCase = (c1, c2, c3) => {
 				return c1 ? c1 === c2 && c1 === c3 : false;
 			};
