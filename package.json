@@ -1,6 +1,6 @@
 {
   "name": "morpion",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Morpion avec AngularJS",
   "main": "index.js",
   "scripts": {
