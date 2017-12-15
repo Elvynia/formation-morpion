@@ -16,7 +16,8 @@
 		</a>
 	</h1>
 	<div class="game" ng-show="ctrl.playing">
-		<morpion></morpion>
+		<morpion playing="ctrl.playing"
+			on-stop="ctrl.doStop(status)"></morpion>
 	</div>
 </body>
 </html>

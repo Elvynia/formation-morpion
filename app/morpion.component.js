@@ -7,12 +7,19 @@ angular.module('Morpion')
 		},
 		controller: function($scope, gameData) {
 			var ctrl = this;
-			ctrl.currentPlayer = gameData.players[gameData.current];
+			ctrl.update = () => {
+				ctrl.currentPlayer = gameData.players[gameData.current];
+			};
 			ctrl.doMove = (index) => {
 				gameData.values[index] = ctrl.currentPlayer;
 				if (!ctrl.checkWin()) {
 					gameData.switchPlayer();
-					ctrl.currentPlayer = gameData.players[gameData.current];
+					ctrl.update();
+				} else {
+					gameData.status.winner = ctrl.currentPlayer;
+					ctrl.onStop({status: gameData.status});
+					ctrl.started = false;
+					ctrl.currentPlayer = '';
 				}
 			};
 			let checkCase = (c1, c2, c3) => {
@@ -49,19 +56,23 @@ angular.module('Morpion')
 				let isDraw = !result && Object.keys(gameData.values).length === 9;
 				if (result || isDraw) {
 					gameData.status.isDraw = isDraw;
-					$scope.$emit('morpion-stop');
 					return true;
 				} else {
 					return false;
 				}
 			};
-			$scope.$on('morpion-start', () => {
-				// gameData.players.reverse();
-				// gameData.current = 0;
-				gameData.values = [];
-				gameData.status.isDraw = false;
-				gameData.status.playing = false;
-				gameData.status.winner = '';
-			});
+			ctrl.started = false;
+			ctrl.$doCheck = () => {
+				if (ctrl.playing && !ctrl.started) {
+					gameData.players.reverse();
+					gameData.current = 0;
+					ctrl.update();
+					gameData.values = [];
+					gameData.status.isDraw = false;
+					gameData.status.playing = false;
+					gameData.status.winner = '';
+					ctrl.started = true;
+				}
+			};
 		}
 	});

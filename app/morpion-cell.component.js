@@ -23,6 +23,11 @@ angular.module('Morpion')
 				ctrl.playerClass = '';
 				ctrl.played = false;
 			};
-			$scope.$on('morpion-start', ctrl.reset);
+			ctrl.$onChanges = (changes) => {
+				if (changes.currentPlayer.currentValue === ''
+					&& changes.currentPlayer.previousValue) {
+					ctrl.reset();
+				}
+			};
 		}
 	});
