@@ -10,22 +10,10 @@ angular.module('Morpion')
 			var ctrl = this;
 			ctrl.played = false;
 			ctrl.playerClass = '';
-			ctrl.$doCheck = function() {
-
-			};
-			ctrl.$onChanges = function(changes) {
-				// console.log(changes);
-				console.log('prev:%s, cur:%s, isFirst:%s',
-					changes.currentPlayer.previousValue,
-					changes.currentPlayer.currentValue,
-					changes.currentPlayer.isFirstChange()
-					);
-			}
 			ctrl.play = () => {
 				if (!ctrl.played) {
 					ctrl.played = true;
 					ctrl.playerClass = ctrl.currentPlayer;
-					console.log('morpion-cell:%s', ctrl.currentPlayer);
 					ctrl.onMove({index: ctrl.index});
 				} else {
 					console.warn('Impossible de jouer ici...');

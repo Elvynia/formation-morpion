@@ -7,14 +7,13 @@ angular.module('Morpion')
 		},
 		controller: function($scope, gameData) {
 			var ctrl = this;
-			ctrl.currentPlayer = {
-				test: gameData.players[gameData.current]
-			};
+			ctrl.currentPlayer = gameData.players[gameData.current];
 			ctrl.doMove = (index) => {
 				gameData.values[index] = ctrl.currentPlayer;
-				gameData.switchPlayer();
-				ctrl.currentPlayer.test = gameData.players[gameData.current];
-				console.log('morpion:%s', JSON.stringify(ctrl.currentPlayer));
+				if (!ctrl.checkWin()) {
+					gameData.switchPlayer();
+					ctrl.currentPlayer = gameData.players[gameData.current];
+				}
 			};
 			let checkCase = (c1, c2, c3) => {
 				return c1 ? c1 === c2 && c1 === c3 : false;
@@ -51,11 +50,14 @@ angular.module('Morpion')
 				if (result || isDraw) {
 					gameData.status.isDraw = isDraw;
 					$scope.$emit('morpion-stop');
+					return true;
+				} else {
+					return false;
 				}
 			};
 			$scope.$on('morpion-start', () => {
-				gameData.players.reverse();
-				gameData.current = 0;
+				// gameData.players.reverse();
+				// gameData.current = 0;
 				gameData.values = [];
 				gameData.status.isDraw = false;
 				gameData.status.playing = false;

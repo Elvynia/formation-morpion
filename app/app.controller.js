@@ -11,7 +11,7 @@ angular.module('Morpion')
 		};
 		$scope.$on('morpion-stop', () => {
 			this.results = true;
-			gameData.switchPlayer();
+			// gameData.switchPlayer();
 			this.isDraw = gameData.status.isDraw;
 			this.winner = gameData.players[gameData.current];
 			this.playing = false;
