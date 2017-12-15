@@ -5,19 +5,30 @@ angular.module('Morpion')
 			'onStop': '&',
 			'playing': '<'
 		},
-		controller: function($scope, gameData) {
+		controller: function($scope) {
 			var ctrl = this;
+			ctrl.gameData = {
+				players: ['red', 'blue'],
+				current: 0,
+				values: [],
+				status: {
+					isDraw: false,
+					winner: '',
+					playing: false
+				},
+				switchPlayer: () => ctrl.gameData.current = (ctrl.gameData.current + 1) % 2
+			};
 			ctrl.update = () => {
-				ctrl.currentPlayer = gameData.players[gameData.current];
+				ctrl.currentPlayer = ctrl.gameData.players[ctrl.gameData.current];
 			};
 			ctrl.doMove = (index) => {
-				gameData.values[index] = ctrl.currentPlayer;
+				ctrl.gameData.values[index] = ctrl.currentPlayer;
 				if (!ctrl.checkWin()) {
-					gameData.switchPlayer();
+					ctrl.gameData.switchPlayer();
 					ctrl.update();
 				} else {
-					gameData.status.winner = ctrl.currentPlayer;
-					ctrl.onStop({status: gameData.status});
+					ctrl.gameData.status.winner = ctrl.currentPlayer;
+					ctrl.onStop({status: ctrl.gameData.status});
 					ctrl.started = false;
 					ctrl.currentPlayer = '';
 				}
@@ -32,30 +43,30 @@ angular.module('Morpion')
 					if (i % 3 == 0) {
 						// Lignes
 						result = result || checkCase(
-							gameData.values[i],
-							gameData.values[i+1],
-							gameData.values[i+2]);
+							ctrl.gameData.values[i],
+							ctrl.gameData.values[i+1],
+							ctrl.gameData.values[i+2]);
 					}
 					if (i < 3) {
 						// Colonnes
 						result = result || checkCase(
-							gameData.values[i],
-							gameData.values[i+3],
-							gameData.values[i+6]);
+							ctrl.gameData.values[i],
+							ctrl.gameData.values[i+3],
+							ctrl.gameData.values[i+6]);
 					}
 				}
 				// Diagonales
 				result = result || checkCase(
-						gameData.values[0],
-						gameData.values[4],
-						gameData.values[8]);
+						ctrl.gameData.values[0],
+						ctrl.gameData.values[4],
+						ctrl.gameData.values[8]);
 				result = result || checkCase(
-						gameData.values[2],
-						gameData.values[4],
-						gameData.values[6]);
-				let isDraw = !result && Object.keys(gameData.values).length === 9;
+						ctrl.gameData.values[2],
+						ctrl.gameData.values[4],
+						ctrl.gameData.values[6]);
+				let isDraw = !result && Object.keys(ctrl.gameData.values).length === 9;
 				if (result || isDraw) {
-					gameData.status.isDraw = isDraw;
+					ctrl.gameData.status.isDraw = isDraw;
 					return true;
 				} else {
 					return false;
@@ -64,13 +75,13 @@ angular.module('Morpion')
 			ctrl.started = false;
 			ctrl.$doCheck = () => {
 				if (ctrl.playing && !ctrl.started) {
-					gameData.players.reverse();
-					gameData.current = 0;
+					ctrl.gameData.players.reverse();
+					ctrl.gameData.current = 0;
 					ctrl.update();
-					gameData.values = [];
-					gameData.status.isDraw = false;
-					gameData.status.playing = false;
-					gameData.status.winner = '';
+					ctrl.gameData.values = [];
+					ctrl.gameData.status.isDraw = false;
+					ctrl.gameData.status.playing = false;
+					ctrl.gameData.status.winner = '';
 					ctrl.started = true;
 				}
 			};

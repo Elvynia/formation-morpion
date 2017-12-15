@@ -6,7 +6,7 @@ angular.module('Morpion')
 			'currentPlayer': '<',
 			'onMove': '&'
 		},
-		controller: function($scope) {
+		controller: function() {
 			var ctrl = this;
 			ctrl.played = false;
 			ctrl.playerClass = '';
