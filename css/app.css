@@ -18,3 +18,20 @@ table.morpion td {
 	width: 100px;
 	height: 100px;
 }
+
+td .circle {
+	height: 100%;
+	border: 10px solid red;
+	border-radius: 50%;
+}
+
+td .cross::before {
+	font-size: 64px;
+	font-family: sans-serif;
+	content: 'X';
+	height: 100%;
+	width: 100%;
+	display: block;
+	text-align: center;
+	color: darkblue;
+}
