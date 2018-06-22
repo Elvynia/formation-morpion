@@ -70,6 +70,28 @@
 			}
 		};
 		this.checkVictory = function() {
+			let result = null;
+			// Vérification des lignes.
+			this.data.forEach((line, i) => {
+				result = result || this.checkWinCase(this.data[i][0], this.data[i][1], this.data[i][2]);
+			});
+			// Vérification des colonnes.
+			this.data[0].forEach((line, i) => {
+				result = result || this.checkWinCase(this.data[0][i], this.data[1][i], this.data[2][i]);
+			});
+			// Vérifications des diagonales.
+			result = result || this.checkWinCase(this.data[0][0], this.data[1][1], this.data[2][2]);
+			result = result || this.checkWinCase(this.data[0][2], this.data[1][1], this.data[2][0]);
+			// Retrouver le joueur à partir de son className.
+			if (result) {
+				result = this.players.find((player) => player.className === result);
+			}
+			return result;
+		};
+		this.checkWinCase = function(cell1, cell2, cell3) {
+			if (cell1 && cell1 === cell2 && cell1 === cell3) {
+				return cell1;
+			}
 			return null;
 		};
 		this.stopGame = function(winner) {
