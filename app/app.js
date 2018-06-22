@@ -50,18 +50,27 @@
 			let clickedCell = event.target || event.currentTarget;
 			console.log('Le joueur %s a joué dans la cellule :', currentPlayer.getName(), clickedCell);
 			// Ajouter le symbole du joueur dans la cellule et remplir les données métier 'data'.
-
+			let token = document.createElement('div');
+			token.classList.add(currentPlayer.className);
+			clickedCell.appendChild(token);
 			// Vérifier si le joueur a gagné la partie
-
-			// Si la partie continue : Incrémenter le nombre de tours, retirer le listener sur 'click'.
-			// Bonne pratique dans tous les langages : préférer la pré-incrémentation si possible.
-			++hyperpion.turnCount;
+			let result = hyperpion.checkVictory();
+			if (result !== null || hyperpion.turnCount === 8) {
+				hyperpion.stopGame(result);
+			} else {
+				// Si la partie continue : Incrémenter le nombre de tours, retirer le listener sur 'click'.
+				// Bonne pratique dans tous les langages : préférer la pré-incrémentation si possible.
+				++hyperpion.turnCount;
+				// Retirer l'écoute de l'événement 'click'.
+				clickedCell.removeEventListener('click', hyperpion.play);
+			}
 		};
 		this.checkVictory = function() {
-			
+			return null;
 		};
 		this.stopGame = function(winner) {
-
+			console.log('Partie terminée avec %s !',
+				winner === null ? 'égalité' : winner.getName() + ' vainqueur');
 		};
 	};
 
