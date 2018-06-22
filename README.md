@@ -21,10 +21,10 @@ Implémentation des fonction métier (liées au règles du jeu).
   - Identifier le joueur courant en fonction du nombre de tours et du tableau des joueurs
   - Créer un élément HTML (variable 'token'). Lui attribuer la classe CSS correspondant au joueur courant
   - Ajouter 'token' à 'cell'
+  - Remplir la bonne cellule de Game.data avec le className du joueur
   - Récupérer le résultat de checkVictory (variable 'result')
   - Si result est un joueur ou que le nombre de tours est strictement égal à 9
     - Appeler la fonction stopGame avec 'result' en argument
   - Sinon
     - Incrémenter le nombre de tours
-    - Remplir la bonne cellule de Game.data avec le className du joueur
     - Retirer le listener sur l'événement click de 'cell'
