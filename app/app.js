@@ -49,10 +49,14 @@
 			// ou sinon (si target null ou undefined) utiliser currentTarget.
 			let clickedCell = event.target || event.currentTarget;
 			console.log('Le joueur %s a joué dans la cellule :', currentPlayer.getName(), clickedCell);
-			// Ajouter le symbole du joueur dans la cellule et remplir les données métier 'data'.
+			// Ajouter le symbole du joueur dans la cellule.
 			let token = document.createElement('div');
 			token.classList.add(currentPlayer.className);
 			clickedCell.appendChild(token);
+			// Remplir les données métier 'data'.
+			let line = clickedCell.parentElement.classList[0].split('-')[1];
+			let cell = clickedCell.classList[0].split('-')[1];
+			hyperpion.data[line][cell] = currentPlayer.className;
 			// Vérifier si le joueur a gagné la partie
 			let result = hyperpion.checkVictory();
 			if (result !== null || hyperpion.turnCount === 8) {
