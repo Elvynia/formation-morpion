@@ -6,7 +6,7 @@ Application Web avec le jeu du morpion (version Jquery, AngularJS, Angular5)
 Mise en place de la structure
 
 ## Partie 2
-Implémentation des fonction métier (liées au règles du jeu).
+Implémentation des fonctions du jeu :
 
 * Fonction d'initialisation du morpion : initialize() -> void
   - Utiliser la fonction 'querySelector' de l'API du DOM pour sélectionner uniquement les éléments 'td' à l'intérieur de la 'table' du morpion (classe CSS morpion) et obtenir un tableau (variable 'cells')
@@ -28,3 +28,11 @@ Implémentation des fonction métier (liées au règles du jeu).
   - Sinon
     - Incrémenter le nombre de tours
     - Retirer le listener sur l'événement click de 'cell'
+* Fonction d'arrêt du jeu lorsque la partie est terminée : stopGame(winner) -> void
+  - Afficher les résultats de la partie à l'utilisateur
+    - Si 'winner' n'a pas la valeur 'null'
+      - Récupérer le nom du joueur gagnant et afficher sa victoire dans la page
+    - Sinon
+      - Afficher un match nul
+  - Retirer tous les écouteurs de l'événement 'click' de toutes les cases de la grille du morpion
+    - Utiliser à nouveau forEach pour parcourir tous les <td> et pour chacun utiliser 'removeEventListener'
