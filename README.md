@@ -8,6 +8,10 @@ Mise en place de la structure
 ## Partie 2
 Implémentation des fonction métier (liées au règles du jeu).
 
+* Fonction d'initialisation du morpion : initialize() -> void
+  - Utiliser la fonction 'querySelector' de l'API du DOM pour sélectionner uniquement les éléments 'td' à l'intérieur de la 'table' du morpion (classe CSS morpion) et obtenir un tableau (variable 'cells')
+  - Utiliser la fonction forEach sur 'cells' et pour chaque élément
+    - Ajouter le listener 'play' sur l'événement 'click'
 * Fonction de vérification : checkVictory() -> Le joueur gagnant ou null
   - Déclarer une variable 'won'
   - Pour chaque cas de victoire (ligne, colonne, diagonale), assigner le className (valeur dans data) si le cas est gagnant et tant que 'won' est null
